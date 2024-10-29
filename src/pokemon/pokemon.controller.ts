@@ -4,7 +4,7 @@ import { Pokemon } from './pokemon.entity';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('pokemon')
-@Controller('pokemon')
+@Controller('api/pokemon')
 export class PokemonController {
   constructor(private readonly pokemonService: PokemonsService) {}
 

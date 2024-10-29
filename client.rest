@@ -1,11 +1,11 @@
-@baseUrl = http://localhost:3000
+@baseUrl = http://localhost:3001
 
-GET {{baseUrl}}/pokemons/
+GET {{baseUrl}}/api/pokemon/
 ###
-GET {{baseUrl}}/pokemons/1
+GET {{baseUrl}}/api/pokemon/1
 ###
-POST {{baseUrl}}/pokemons/squirtle
+POST {{baseUrl}}/api/pokemon/squirtle
 ###
-POST {{baseUrl}}/pokemons/rayquaza
+POST {{baseUrl}}/api/pokemon/rayquaza
 ###
-DELETE {{baseUrl}}/pokemons/5
+DELETE {{baseUrl}}/api/pokemon/5

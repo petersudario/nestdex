@@ -1,7 +1,7 @@
 // src/app.module.ts
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PokemonsModule } from './pokemons/pokemons.module';
+import { PokemonsModule } from './pokemon/pokemons.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
