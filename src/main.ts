@@ -13,8 +13,8 @@ async function bootstrap() {
   }));
   
   const config = new DocumentBuilder()
-    .setTitle('Pokedex API')
-    .setDescription('API para gerenciar Pokémons')
+    .setTitle('NestDEX')
+    .setDescription('API para gerenciar Pokémons (existentes e não existentes)')
     .setVersion('1.0')
     .build();
   

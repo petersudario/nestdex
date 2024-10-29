@@ -1,0 +1,11 @@
+@baseUrl = http://localhost:3000
+
+GET {{baseUrl}}/pokemons/
+###
+GET {{baseUrl}}/pokemons/1
+###
+POST {{baseUrl}}/pokemons/squirtle
+###
+POST {{baseUrl}}/pokemons/rayquaza
+###
+DELETE {{baseUrl}}/pokemons/5
