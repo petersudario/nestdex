@@ -1,30 +1,40 @@
-import './App.css';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
+import Hero from './Components/Hero';
+import SearchBar from './Components/SearchBar';
+import PokemonCard from './Components/PokemonCard';
+import PokemonCarousel from './Components/PokemonCarousel';
+
 
 function App() {
-  const [pokemon, setPokemon] = useState([]);
+  const [searchResult, setSearchResult] = useState(null);
 
-  useEffect(() => {
-    axios.get('/api/pokemon')
-      .then(response => setPokemon(response.data))
-      .catch(error => console.error(error));
-  }, []);
+  const handleSearch = async (name) => {
+    try {
+      const response = await fetch(`/api/pokemon/${name}`);
+      if (!response.ok) {
+        throw new Error('Pokémon not found');
+      }
+      const data = await response.json();
+      setSearchResult(data);
+    } catch (error) {
+      alert(error.message);
+      setSearchResult(null);
+    }
+  };
 
   return (
     <div>
-      <h1>Pokemon List</h1>
-      <ul>
-        {pokemon.map(p => (
-          <div>
-            <li key={p.id}>{p.name}</li>
-            <div>
-              <img alt='' src={p.imageUrl}></img>
-            </div>
+      <Hero />
+      <div className="container mx-auto px-4 py-8">
+        <SearchBar onSearch={handleSearch} />
+        {searchResult && (
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold mb-4">Search Result</h2>
+            <PokemonCard pokemon={searchResult} />
           </div>
-
-        ))}
-      </ul>
+        )}
+        <PokemonCarousel />
+      </div>
     </div>
   );
 }

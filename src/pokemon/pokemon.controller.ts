@@ -1,30 +1,28 @@
-import { Controller, Delete, Get, Param, Post } from '@nestjs/common';
-import { PokemonsService } from './pokemons.service';
-import { Pokemon } from './pokemon.entity';
-import { ApiTags } from '@nestjs/swagger';
+// src/pokemon/pokemon.controller.ts
+import { Controller, Get, Post, Param, Query, Delete } from '@nestjs/common';
+import { PokemonService } from './pokemon.service';
 
-@ApiTags('pokemon')
 @Controller('api/pokemon')
 export class PokemonController {
-  constructor(private readonly pokemonService: PokemonsService) {}
+  constructor(private readonly pokemonService: PokemonService) {}
 
   @Post(':name')
-  async createPokemon(@Param('name') name: string): Promise<Pokemon> {
+  async createPokemon(@Param('name') name: string) {
     return this.pokemonService.fetchAndStorePokemonData(name);
   }
 
   @Get()
-  async findAll(): Promise<Pokemon[]> {
-    return this.pokemonService.findAll();
+  async findAll(@Query('limit') limit = 20, @Query('offset') offset = 0) {
+    return this.pokemonService.findAllPaginated(+limit, +offset);
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<Pokemon> {
+  async findOne(@Param('id') id: number) {
     return this.pokemonService.findOne(id);
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: number): Promise<void> {
+  async delete(@Param('id') id: number) {
     return this.pokemonService.delete(id);
   }
 }
