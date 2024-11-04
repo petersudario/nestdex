@@ -1,18 +1,22 @@
 import React from 'react';
 
-const PokemonCard = ({ pokemon }) => {
+const PokemonCard = ({ pokemon, isSuggestion }) => {
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
+    <div className={`flex items-center p-2 border rounded ${isSuggestion ? 'w-40' : 'max-w-sm'} bg-white transform hover:scale-105 transition duration-300`}>
       <img
-        className="w-full h-48 object-contain bg-gray-100"
+        className="w-12 h-12 object-contain mr-4"
         src={pokemon.imageUrl}
         alt={pokemon.name}
+        loading="lazy"
       />
-      <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2 capitalize">{pokemon.name}</div>
-        <p className="text-gray-700 text-base">
-          Attack: {pokemon.attack}
-        </p>
+      <div className="text-gray-700 capitalize">
+        {pokemon.name}
+        {!isSuggestion && (
+          <>
+            <p><strong>Attack:</strong> {pokemon.attack}</p>
+            <p><strong>Type:</strong> {pokemon.type}</p>
+          </>
+        )}
       </div>
     </div>
   );

@@ -2,9 +2,10 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Pokemon } from './pokemon.entity';
 import { lastValueFrom } from 'rxjs';
+import * as stringSimilarity from 'string-similarity'; // Import the library
 
 @Injectable()
 export class PokemonService {
@@ -43,4 +44,37 @@ export class PokemonService {
   async delete(id: number): Promise<void> {
     await this.pokemonRepository.delete(id);
   }
+
+  async findByName(name: string): Promise<{ pokemon?: Pokemon; suggestions: Pokemon[] }> {
+    // Busca um Pokémon com nome exato
+    let pokemon = await this.pokemonRepository.findOneBy({ name });
+
+    if (pokemon) {
+      return { pokemon, suggestions: [] };
+    }
+
+    const allPokemon = await this.pokemonRepository.find({
+      select: ['name', 'attack', 'imageUrl'], 
+    });
+
+    const names = allPokemon.map((p) => p.name);
+
+    const matches = stringSimilarity.findBestMatch(name, names);
+
+    const threshold = 0.4; 
+    const matchedNames = matches.ratings
+      .filter((rating) => rating.rating >= threshold)
+      .sort((a, b) => b.rating - a.rating)
+      .map((rating) => rating.target)
+      .slice(0, 5); 
+
+    const suggestions = await this.pokemonRepository.find({
+      where: { name: In(matchedNames) },
+      select: ['name', 'attack', 'imageUrl']
+    });
+
+    return { suggestions };
+  }
+
+
 }

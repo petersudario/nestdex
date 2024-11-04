@@ -1,8 +1,8 @@
-// src/components/PokemonCarousel.js
 import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import PokemonCard from './PokemonCard';
+import api from '../api';
 
 const PokemonCarousel = () => {
   const [pokemonList, setPokemonList] = useState([]);
@@ -10,9 +10,8 @@ const PokemonCarousel = () => {
   useEffect(() => {
     const fetchPokemonList = async () => {
       try {
-        const response = await fetch('/api/pokemon?limit=20&offset=0');
-        const data = await response.json();
-        setPokemonList(data);
+        const response = await api.get('/api/pokemon');
+        setPokemonList(response.data);
       } catch (error) {
         console.error('Error fetching Pokémon list:', error);
       }

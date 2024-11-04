@@ -1,7 +1,6 @@
-// src/app.module.ts
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PokemonsModule } from './pokemon/pokemon.module';
+import { PokemonModule } from './pokemon/pokemon.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -11,13 +10,13 @@ import { AppService } from './app.service';
       type: 'postgres',
       host: 'localhost',
       port: 5432,
-      username: 'root',
+      username: 'postgres',
       password: 'root',
       database: 'nestdex',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true, 
     }),
-    PokemonsModule,
+    PokemonModule,
   ],
   controllers: [AppController],
   providers: [AppService]

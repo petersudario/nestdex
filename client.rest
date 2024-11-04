@@ -8,4 +8,8 @@ POST {{baseUrl}}/api/pokemon/squirtle
 ###
 POST {{baseUrl}}/api/pokemon/rayquaza
 ###
+POST {{baseUrl}}/api/pokemon/pichu
+###
 DELETE {{baseUrl}}/api/pokemon/5
+###
+GET {{baseUrl}}/api/pokemon/search/squirtle

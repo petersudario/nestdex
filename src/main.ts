@@ -8,6 +8,8 @@ import { Request, Response } from 'express';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  var cors = require('cors')
+  app.use(cors())
 
   app.useStaticAssets(join(__dirname, '..', 'client', 'build'));
 

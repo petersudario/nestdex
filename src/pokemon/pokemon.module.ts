@@ -13,4 +13,4 @@ import { Pokemon } from './pokemon.entity';
   controllers: [PokemonController],
   providers: [PokemonService]
 })
-export class PokemonsModule {}
+export class PokemonModule {}
