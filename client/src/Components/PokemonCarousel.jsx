@@ -2,40 +2,50 @@ import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import PokemonCard from './PokemonCard';
-import api from '../api';
+import axios from 'axios';
 
-const PokemonCarousel = () => {
+const PokemonCarousel = ({ refresh, onRefreshComplete, errorMessage }) => {
   const [pokemonList, setPokemonList] = useState([]);
 
   useEffect(() => {
     const fetchPokemonList = async () => {
       try {
-        const response = await api.get('/api/pokemon');
+        const response = await axios.get('/api/pokemon');
         setPokemonList(response.data);
       } catch (error) {
-        console.error('Error fetching Pokémon list:', error);
+        console.error('Erro ao carregar a lista de Pokémons:', error);
       }
     };
 
     fetchPokemonList();
   }, []);
 
+  // Recarrega os dados quando `refresh` é `true`
+  useEffect(() => {
+    if (refresh) {
+      const fetchUpdatedPokemonList = async () => {
+        try {
+          const response = await axios.get('/api/pokemon');
+          setPokemonList(response.data);
+          onRefreshComplete(); // Chama a função para indicar que o refresh foi concluído
+        } catch (error) {
+          console.error('Erro ao recarregar a lista de Pokémons:', error);
+        }
+      };
+
+      fetchUpdatedPokemonList();
+    }
+  }, [refresh, onRefreshComplete]);
+
+  if (errorMessage) {
+    return <div className="text-center text-red-500">{errorMessage}</div>;
+  }
+
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-4">Pokémon Carousel</h2>
-      <Swiper
-        spaceBetween={20}
-        slidesPerView={3}
-        navigation
-        pagination={{ clickable: true }}
-        breakpoints={{
-          640: { slidesPerView: 1 },
-          768: { slidesPerView: 2 },
-          1024: { slidesPerView: 3 },
-        }}
-      >
-        {pokemonList.map((pokemon) => (
-          <SwiperSlide key={pokemon.id}>
+      <Swiper spaceBetween={20} slidesPerView={3} loop={true}>
+        {pokemonList.map((pokemon, index) => (
+          <SwiperSlide key={index}>
             <PokemonCard pokemon={pokemon} />
           </SwiperSlide>
         ))}

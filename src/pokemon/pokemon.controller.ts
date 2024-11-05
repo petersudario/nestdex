@@ -1,15 +1,17 @@
 // src/pokemon/pokemon.controller.ts
-import { Controller, Get, Post, Param, Query, Delete, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Param, Query, Delete, NotFoundException, Body } from '@nestjs/common';
 import { PokemonService } from './pokemon.service';
+import { CreatePokemonDto } from './dto/create-pokemon.dto';
 
 @Controller('api/pokemon')
 export class PokemonController {
   constructor(private readonly pokemonService: PokemonService) {}
 
-  @Post(':name')
-  async createPokemon(@Param('name') name: string) {
-    return this.pokemonService.fetchAndStorePokemonData(name);
+  @Post()
+  async createPokemon(@Body() createPokemonDto: CreatePokemonDto) {
+    return await this.pokemonService.createPokemon(createPokemonDto);
   }
+  
 
   @Get()
   async findAll(@Query('limit') limit = 20, @Query('offset') offset = 0) {

@@ -1,11 +1,5 @@
 {
-  "options": {
-    "proxy": "http://localhost:3001",
-    "allowedHosts": [
-      "localhost",
-      ".localhost"
-    ]
-  },
+  "proxy": "http://localhost:3001",
   "name": "client",
   "version": "0.1.0",
   "private": true,
@@ -15,9 +9,11 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.7",
     "cors": "^2.8.5",
+    "lodash": "^4.17.21",
     "lodash.debounce": "^4.0.8",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-router-dom": "^6.27.0",
     "react-scripts": "5.0.1",
     "swiper": "^11.1.14",
     "web-vitals": "^2.1.4"

@@ -10,7 +10,7 @@ import { AppService } from './app.service';
       type: 'postgres',
       host: 'localhost',
       port: 5432,
-      username: 'postgres',
+      username: 'root',
       password: 'root',
       database: 'nestdex',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
