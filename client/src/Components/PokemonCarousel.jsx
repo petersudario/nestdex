@@ -20,14 +20,13 @@ const PokemonCarousel = ({ refresh, onRefreshComplete, errorMessage }) => {
     fetchPokemonList();
   }, []);
 
-  // Recarrega os dados quando `refresh` é `true`
   useEffect(() => {
     if (refresh) {
       const fetchUpdatedPokemonList = async () => {
         try {
           const response = await axios.get('/api/pokemon');
           setPokemonList(response.data);
-          onRefreshComplete(); // Chama a função para indicar que o refresh foi concluído
+          onRefreshComplete(); 
         } catch (error) {
           console.error('Erro ao recarregar a lista de Pokémons:', error);
         }
@@ -43,7 +42,7 @@ const PokemonCarousel = ({ refresh, onRefreshComplete, errorMessage }) => {
 
   return (
     <div>
-      <Swiper spaceBetween={20} slidesPerView={3} loop={true}>
+      <Swiper spaceBetween={20} slidesPerView={6} loop={true}>
         {pokemonList.map((pokemon, index) => (
           <SwiperSlide key={index}>
             <PokemonCard pokemon={pokemon} />
