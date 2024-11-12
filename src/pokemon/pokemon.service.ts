@@ -19,7 +19,6 @@ export class PokemonService {
 async createPokemon(createPokemonDto: CreatePokemonDto): Promise<{ message: string; pokemon?: Pokemon }> {
     const { name, imageUrl, attack } = createPokemonDto;
 
-    // Verifica se o Pokémon já existe na base de dados local
     const existingPokemon = await this.pokemonRepository.findOneBy({ name });
 
     if (existingPokemon) {
@@ -29,12 +28,11 @@ async createPokemon(createPokemonDto: CreatePokemonDto): Promise<{ message: stri
       };
     }
 
-    // Se a requisição vier do formulário do front-end
     if (imageUrl || attack) {
       const customPokemon = new Pokemon();
       customPokemon.name = name;
-      customPokemon.imageUrl = imageUrl || ''; // Usa a URL fornecida ou deixa em branco
-      customPokemon.attack = attack || 'Custom'; // Usa o ataque fornecido ou coloca como 'Custom'
+      customPokemon.imageUrl = imageUrl || ''; 
+      customPokemon.attack = attack || 'Custom'; 
 
       const savedCustomPokemon = await this.pokemonRepository.save(customPokemon);
 
@@ -44,7 +42,6 @@ async createPokemon(createPokemonDto: CreatePokemonDto): Promise<{ message: stri
       };
     }
 
-    // Tenta buscar o Pokémon na API externa
     try {
       const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`);
       const data = response.data;
@@ -61,11 +58,10 @@ async createPokemon(createPokemonDto: CreatePokemonDto): Promise<{ message: stri
         pokemon: savedPokemon,
       };
     } catch (error) {
-      // Se o Pokémon não for encontrado na API, cria um Pokémon personalizado com dados mínimos
       const customPokemon = new Pokemon();
       customPokemon.name = name;
-      customPokemon.imageUrl = ''; // Imagem padrão ou vazia
-      customPokemon.attack = 'Custom'; // Ataque padrão ou 'Custom'
+      customPokemon.imageUrl = ''; 
+      customPokemon.attack = 'Custom'; 
 
       const savedCustomPokemon = await this.pokemonRepository.save(customPokemon);
 
@@ -94,7 +90,6 @@ async createPokemon(createPokemonDto: CreatePokemonDto): Promise<{ message: stri
   }
 
   async findByName(name: string): Promise<{ pokemon?: Pokemon; suggestions: Pokemon[] }> {
-    // Busca um Pokémon com nome exato
     let pokemon = await this.pokemonRepository.findOneBy({ name });
 
     if (pokemon) {

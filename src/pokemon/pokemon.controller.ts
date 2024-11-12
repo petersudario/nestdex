@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Param, Query, Delete, NotFoundException, Body } from '@nestjs/common';
+import { Controller, Get, Post, Param, Query, Delete, NotFoundException, Body, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiQuery, ApiBody } from '@nestjs/swagger';
 import { PokemonService } from './pokemon.service';
 import { CreatePokemonDto } from './dto/create-pokemon.dto';
 import { Pokemon } from './pokemon.entity';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('pokemons')
 @Controller('api/pokemon')
@@ -26,6 +27,7 @@ export class PokemonController {
   async findAll(@Query('limit') limit = 20, @Query('offset') offset = 0) {
     return this.pokemonService.findAllPaginated(+limit, +offset);
   }
+
 
   @Get(':id')
   @ApiOperation({ summary: 'Retorna um Pokémon pelo ID' })
