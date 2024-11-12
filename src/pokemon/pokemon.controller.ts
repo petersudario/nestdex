@@ -3,14 +3,13 @@ import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiQuery, ApiBody } from 
 import { PokemonService } from './pokemon.service';
 import { CreatePokemonDto } from './dto/create-pokemon.dto';
 import { Pokemon } from './pokemon.entity';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+
 
 @ApiTags('pokemons')
 @Controller('api/pokemon')
 export class PokemonController {
   constructor(private readonly pokemonService: PokemonService) {}
 
-  @UseGuards(JwtAuthGuard)
   @Post()
   @ApiOperation({ summary: 'Cria um novo Pokémon' })
   @ApiBody({ type: CreatePokemonDto })

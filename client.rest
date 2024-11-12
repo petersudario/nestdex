@@ -1,5 +1,5 @@
-@baseUrl = http://localhost:3001
-
+@baseUrl = http://localhost:5000
+@jwtToken = 'JWT_SECRET'
 GET {{baseUrl}}/api/pokemon/
 ###
 GET {{baseUrl}}/api/pokemon/1
@@ -13,3 +13,27 @@ POST {{baseUrl}}/api/pokemon/pichu
 DELETE {{baseUrl}}/api/pokemon/5
 ###
 GET {{baseUrl}}/api/pokemon/search/squirtle
+
+###
+POST {{baseUrl}}/api/auth/
+Content-Type: application/json
+
+{
+    "email": "admin@gmail.com",
+    "password": "admin"
+}
+
+###
+POST {{baseUrl}}/api/user 
+Content-Type: application/json
+
+{
+    "email": "admin@gmail.com",
+    "password": "admin",
+    "name": "admin"
+}
+
+###
+
+GET {{baseUrl}}/api/user/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwiaWF0IjoxNzMxNDUyMDg4LCJleHAiOjE3MzE0NTU2ODgsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.iLGXqLq1gWxuwQFRbYogUiOdJhLIMkuITZnBRHX56j0

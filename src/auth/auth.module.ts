@@ -1,21 +1,29 @@
-import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
+import { Global, Module } from '@nestjs/common';
+import { HashingService } from './hashing/hashing.service';
+import { BcryptService } from './hashing/bcrypt.service';
 import { AuthController } from './auth.controller';
-import { UsersModule } from '../users/users.module';
+import { AuthService } from './auth.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from 'src/user/entities/user.entity';
+import { ConfigModule } from '@nestjs/config';
+import jwtConfig from './config/jwt.config';
 import { JwtModule } from '@nestjs/jwt';
-import { PassportModule } from '@nestjs/passport';
-import { JwtStrategy } from './jwt.strategy';
 
+@Global()
 @Module({
   imports: [
-    UsersModule,
-    PassportModule,
-    JwtModule.register({
-      secret: process.env.JWT_SECRET || 'ac00733041f52062f1af040c04bd54d3fa6f391d12bfa226dcbe1bb0bdf8a555f53453b212c6a4ace872018d111fe705bd9f5c232c605a44450d55c83c1920f0',
-      signOptions: { expiresIn: '1h' },
-    }),
+    TypeOrmModule.forFeature([User]),
+    ConfigModule.forFeature(jwtConfig),
+    JwtModule.registerAsync(jwtConfig.asProvider()),
   ],
-  providers: [AuthService, JwtStrategy],
   controllers: [AuthController],
+  providers: [
+    {
+      provide: HashingService,
+      useClass: BcryptService,
+    },
+    AuthService,
+  ],
+  exports: [HashingService, JwtModule, ConfigModule, TypeOrmModule],
 })
 export class AuthModule {}
