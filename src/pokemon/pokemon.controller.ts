@@ -10,6 +10,7 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 export class PokemonController {
   constructor(private readonly pokemonService: PokemonService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   @ApiOperation({ summary: 'Cria um novo Pokémon' })
   @ApiBody({ type: CreatePokemonDto })
