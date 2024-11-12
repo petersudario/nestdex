@@ -19,7 +19,7 @@ POST {{baseUrl}}/api/auth/
 Content-Type: application/json
 
 {
-    "email": "admin@gmail.com",
+    "email": "pedro@gmail.com",
     "password": "admin"
 }
 
@@ -28,7 +28,7 @@ POST {{baseUrl}}/api/user
 Content-Type: application/json
 
 {
-    "email": "admin@gmail.com",
+    "email": "pedro@gmail.com",
     "password": "admin",
     "name": "admin"
 }
@@ -36,4 +36,4 @@ Content-Type: application/json
 ###
 
 GET {{baseUrl}}/api/user/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwiaWF0IjoxNzMxNDUyMDg4LCJleHAiOjE3MzE0NTU2ODgsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.iLGXqLq1gWxuwQFRbYogUiOdJhLIMkuITZnBRHX56j0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsImVtYWlsIjoicGVkcm9AZ21haWwuY29tIiwiaWF0IjoxNzMxNDU0ODQ2LCJleHAiOjE3MzE0NTg0NDYsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.r6Y4d0YqISaL_3LEjQEeCoWYeeYYywQ9F4afgFLX-BE
