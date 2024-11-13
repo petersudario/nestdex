@@ -1,39 +1,59 @@
 @baseUrl = http://localhost:5000
-@jwtToken = 'JWT_SECRET'
-GET {{baseUrl}}/api/pokemon/
-###
-GET {{baseUrl}}/api/pokemon/1
-###
-POST {{baseUrl}}/api/pokemon/squirtle
-###
-POST {{baseUrl}}/api/pokemon/rayquaza
-###
-POST {{baseUrl}}/api/pokemon/pichu
-###
-DELETE {{baseUrl}}/api/pokemon/5
-###
-GET {{baseUrl}}/api/pokemon/search/squirtle
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwiaWF0IjoxNzMxNDU1ODA5LCJleHAiOjE3MzE0NTk0MDksImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.9nivZUYaUUECedn1Qatl_2RuyLBY-7c_qW0GkmdDb3A
+@refreshToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTczMTQ1NTgwOSwiZXhwIjoxNzMxNTQyMjA5LCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjMwMDAiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjMwMDAifQ.Kgofa-F0e9iuDsdRYvwdAZLNEdePudU76A_JM_8SZmQ
 
-###
-POST {{baseUrl}}/api/auth/
+### 1. Login
+POST {{baseUrl}}/api/auth
 Content-Type: application/json
 
 {
-    "email": "pedro@gmail.com",
-    "password": "admin"
+  "email": "admin@gmail.com",
+  "password": "12345"
 }
 
-###
-POST {{baseUrl}}/api/user 
+
+### 2. Refresh Tokens
+POST {{baseUrl}}/api/auth/refresh
 Content-Type: application/json
 
 {
-    "email": "pedro@gmail.com",
-    "password": "admin",
-    "name": "admin"
+  "refreshToken": "{{refreshToken}}"
 }
 
-###
 
-GET {{baseUrl}}/api/user/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsImVtYWlsIjoicGVkcm9AZ21haWwuY29tIiwiaWF0IjoxNzMxNDU0ODQ2LCJleHAiOjE3MzE0NTg0NDYsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.r6Y4d0YqISaL_3LEjQEeCoWYeeYYywQ9F4afgFLX-BE
+### 3. Create User
+POST {{baseUrl}}/api/user
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "name": "admin",
+  "email": "admin@gmail.com",
+  "password": "12345"
+}
+
+
+### 4. Get All Users
+GET {{baseUrl}}/api/user
+Authorization: Bearer {{accessToken}}
+
+
+### 5. Get User by ID
+GET {{baseUrl}}/api/user/1
+Authorization: Bearer {{accessToken}}
+
+
+### 6. Update User by ID
+PATCH {{baseUrl}}/api/user/1
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "name": "Updated Name",
+  "password": "newpassword123"
+}
+
+
+### 7. Delete User by ID
+DELETE {{baseUrl}}/api/user/1
+Authorization: Bearer {{accessToken}}
